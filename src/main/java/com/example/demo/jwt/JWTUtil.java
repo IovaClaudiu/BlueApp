@@ -24,9 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public final class JWTUtil {
 
-	private static final String MY_VALUE = "myValue";
-
-	@Value("com.example.demo.jwt.secret.key:secret")
+	@Value("${com.example.demo.jwt.secret.key:other}")
 	private String SECRET_KEY;
 
 	/**
@@ -66,7 +64,6 @@ public final class JWTUtil {
 	 */
 	public String generateToken(final UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put(MY_VALUE, "testing value");
 		return createToken(claims, userDetails.getUsername());
 	}
 
