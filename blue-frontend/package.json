@@ -1,0 +1,36 @@
+{
+    "name": "BlueApp",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "webpack --mode production",
+        "start": "webpack-dev-server --mode development --open"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@angular/common": "^8.0.0",
+        "@angular/compiler": "^8.0.0",
+        "@angular/core": "^8.0.0",
+        "@angular/forms": "^8.0.0",
+        "@angular/platform-browser": "^8.0.0",
+        "@angular/platform-browser-dynamic": "^8.0.0",
+        "@angular/router": "^8.0.0",
+        "core-js": "^3.6.5",
+        "rxjs": "^6.6.2",
+        "zone.js": "^0.9.1"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.54",
+        "angular2-template-loader": "^0.6.2",
+        "css-loader": "^2.1.1",
+        "html-loader": "^0.5.5",
+        "html-webpack-plugin": "^3.2.0",
+        "less": "^3.12.2",
+        "less-loader": "^5.0.0",
+        "style-loader": "^0.23.1",
+        "ts-loader": "^6.2.2",
+        "typescript": "^3.9.7",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0"
+    }
+}
