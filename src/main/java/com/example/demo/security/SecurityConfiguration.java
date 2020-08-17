@@ -16,6 +16,12 @@ import com.example.demo.service.MyUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Security configuration class.
+ * 
+ * @author ClaudiuIova
+ *
+ */
 @SuppressWarnings("deprecation")
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -32,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()//
+				.antMatchers("/admin").hasRole("ADMIN")//
+				.antMatchers("/user").hasAnyRole("ADMIN", "USER")//
 				.anyRequest().authenticated()//
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

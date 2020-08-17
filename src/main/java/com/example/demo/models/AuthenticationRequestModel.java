@@ -5,11 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Model for the body request.
+ * 
+ * @author ClaudiuIova
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationRequestModel {
 
 	private String username;
 	private String password;
