@@ -9,7 +9,7 @@ export class UserService implements OnInit {
 
   ngOnInit(): void {}
 
-  getAll(token: string) {
+  getAll() {
     return this.http.get<User[]>(`${config.apiUrl}/users`);
   }
 
@@ -17,7 +17,7 @@ export class UserService implements OnInit {
     return this.http.post(`${config.apiUrl}/register`, user);
   }
 
-  delete(id: number) {
-    return this.http.delete(`${config.apiUrl}/users/${id}`);
+  delete(email: string) {
+    return this.http.delete(`${config.apiUrl}/user/${email}`);
   }
 }

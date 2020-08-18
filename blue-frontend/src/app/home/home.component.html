@@ -16,6 +16,10 @@
     <td>{{ user.lastname }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.roles }}</td>
-    <td><a (click)="deleteUser(user.id)" class="text-danger">Delete</a></td>
+    <td>
+      <a (click)="deleteUser(user.email, user.roles)" class="text-danger"
+        >Delete</a
+      >
+    </td>
   </tbody>
 </table>

@@ -55,4 +55,18 @@ public final class MyUserDetailsService implements UserDetailsService {
 		return repo.saveAndFlush(user);
 	}
 
+	/**
+	 * Delete the user from db
+	 * 
+	 * @param email The email of the user
+	 */
+	public final void deleteUser(final String email) {
+		Optional<User> findByEmail = repo.findByEmail(email);
+		findByEmail.ifPresentOrElse((user) -> {
+			repo.delete(user);
+		}, () -> {
+			throw new IllegalArgumentException("Failed to find a user with email: " + email);
+		});
+	}
+
 }
