@@ -47,6 +47,11 @@ public final class ManageController {
 		}
 	}
 
+//	@DeleteMapping("/user/${email}")
+//	public final void delete() {
+//
+//	}
+
 	@PostMapping("/register")
 	public final ResponseEntity<?> register(@RequestBody final User user) {
 		try {

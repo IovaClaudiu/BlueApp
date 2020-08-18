@@ -1,10 +1,21 @@
 ﻿<h1>Hi {{ currentUser.email }}!</h1>
 <p>You're logged in BlueApp</p>
 <h3>All users:</h3>
-<ul>
-  <li *ngFor="let user of users">
-    Email: {{ user.email }} - Firstname: {{ user.firstname }} Roles:
-    {{ user.roles }} -
-    <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-  </li>
-</ul>
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <th scope="col">#</th>
+    <th scope="col">First</th>
+    <th scope="col">Last</th>
+    <th scope="col">Email</th>
+    <th scope="col">Roles</th>
+    <th scope="col">Actions</th>
+  </thead>
+  <tbody *ngFor="let user of users">
+    <th scope="row">{{ user.id }}</th>
+    <td>{{ user.firstname }}</td>
+    <td>{{ user.lastname }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.roles }}</td>
+    <td><a (click)="deleteUser(user.id)" class="text-danger">Delete</a></td>
+  </tbody>
+</table>
