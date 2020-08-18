@@ -37,15 +37,25 @@ public final class ManageController {
 	private final MyUserDetailsService userDetailsService;
 	private final JWTUtil jwtTokenUtil;
 
-	@GetMapping("/admin")
-	public final String admin() {
-		return "Hi Admin";
-	}
-
 	@GetMapping("/users")
 	public final ResponseEntity<?> users() {
-		Collection<User> users = this.userDetailsService.getUsers();
-		return ResponseEntity.ok(users);
+		try {
+			Collection<User> users = this.userDetailsService.getUsers();
+			return ResponseEntity.ok(users);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+
+	@PostMapping("/register")
+	public final ResponseEntity<?> register(@RequestBody final User user) {
+		try {
+			user.setRoles("ROLE_USER");
+			User addUser = userDetailsService.addUser(user);
+			return ResponseEntity.ok(addUser);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
 	@PostMapping("/authenticate")

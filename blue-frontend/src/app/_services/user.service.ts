@@ -10,13 +10,7 @@ export class UserService implements OnInit {
   ngOnInit(): void {}
 
   getAll(token: string) {
-    return this.http.get<User[]>(`${config.apiUrl}/users`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    return this.http.get<User[]>(`${config.apiUrl}/users`);
   }
 
   register(user: User) {

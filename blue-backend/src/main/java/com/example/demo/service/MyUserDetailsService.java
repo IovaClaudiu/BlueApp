@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.models.MyUserDetails;
 import com.example.demo.models.User;
@@ -43,4 +44,15 @@ public final class MyUserDetailsService implements UserDetailsService {
 	public final Collection<User> getUsers() {
 		return repo.findAll();
 	}
+
+	/**
+	 * Save the user in the DB
+	 * 
+	 * @param user The user that want to be saved.
+	 * @return The saved {@link User}.
+	 */
+	public final User addUser(@Validated final User user) {
+		return repo.saveAndFlush(user);
+	}
+
 }

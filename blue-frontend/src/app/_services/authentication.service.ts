@@ -22,19 +22,8 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    const requestHeaders = {
-      headers: new HttpHeaders({
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      }),
-    };
     return this.http
-      .post<any>(
-        `${config.apiUrl}/authenticate`,
-        { email, password },
-        requestHeaders
-      )
+      .post<any>(`${config.apiUrl}/authenticate`, { email, password })
       .pipe(
         map((user) => {
           localStorage.setItem("currentUser", JSON.stringify(user));
@@ -45,7 +34,6 @@ export class AuthenticationService {
   }
 
   logout() {
-    // remove user from local storage and set current user to null
     localStorage.removeItem("currentUser");
     this.currentUserSubject.next(null);
   }
