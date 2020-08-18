@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.jwt.JWTUtil;
 import com.example.demo.models.AuthenticationRequestModel;
 import com.example.demo.models.AuthenticationResponseModel;
@@ -61,7 +63,7 @@ public final class ManageController {
 	}
 
 	@PostMapping("/register")
-	public final ResponseEntity<?> register(@RequestBody final User user) {
+	public final ResponseEntity<?> register(@RequestBody @Validated final UserDTO user) {
 		try {
 			user.setRoles("ROLE_USER");
 			User addUser = userDetailsService.addUser(user);

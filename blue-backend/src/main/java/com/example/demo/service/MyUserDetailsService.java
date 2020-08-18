@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.models.MyUserDetails;
 import com.example.demo.models.User;
 import com.example.demo.repo.UserRepository;
@@ -28,10 +28,10 @@ public final class MyUserDetailsService implements UserDetailsService {
 	private final UserRepository repo;
 
 	@Override
-	public final UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		Optional<User> findByUsername = repo.findByEmail(username);
+	public final UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
+		Optional<User> findByUsername = repo.findByEmail(email);
 
-		findByUsername.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + username));
+		findByUsername.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + email));
 
 		return findByUsername.map(MyUserDetails::new).get();
 	}
@@ -51,7 +51,8 @@ public final class MyUserDetailsService implements UserDetailsService {
 	 * @param user The user that want to be saved.
 	 * @return The saved {@link User}.
 	 */
-	public final User addUser(@Validated final User user) {
+	public final User addUser(final UserDTO userDTO) {
+		User user = getUserFromDTO(userDTO);
 		return repo.saveAndFlush(user);
 	}
 
@@ -67,6 +68,16 @@ public final class MyUserDetailsService implements UserDetailsService {
 		}, () -> {
 			throw new IllegalArgumentException("Failed to find a user with email: " + email);
 		});
+	}
+
+	private User getUserFromDTO(UserDTO dto) {
+		User user = new User();
+		user.setEmail(dto.getEmail());
+		user.setFirstname(dto.getFirstname());
+		user.setLastname(dto.getLastname());
+		user.setPassword(dto.getPassword());
+		user.setRoles(dto.getRoles());
+		return user;
 	}
 
 }

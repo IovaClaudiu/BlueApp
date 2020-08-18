@@ -24,7 +24,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * JWT filter that check if the JWT is in header
+ * JWT filter that check if the JWT is present in the header of the request.
  * 
  * @author ClaudiuIova
  *
@@ -40,7 +40,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
-			FilterChain filterChain) throws ServletException, IOException {
+			final FilterChain filterChain) throws ServletException, IOException {
 
 		try {
 			final String authorizationHeader = request.getHeader(AUTHORIZATION);

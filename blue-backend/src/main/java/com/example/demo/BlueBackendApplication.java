@@ -17,5 +17,4 @@ public class BlueBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BlueBackendApplication.class, args);
 	}
-
 }
