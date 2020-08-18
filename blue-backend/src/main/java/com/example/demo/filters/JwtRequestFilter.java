@@ -70,7 +70,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	}
 
 	private void doSecurityAuthentication(final HttpServletRequest request, final InformationStructure structure) {
-		UserDetails userDetails = this.userServiceDetails.loadUserByUsername(structure.getUsername());
+		UserDetails userDetails = this.userServiceDetails.loadUserByUsername(structure.getEmail());
 		if (jwtUtil.validateToken(structure.getJwt(), userDetails)) {
 			UsernamePasswordAuthenticationToken usernameAndPasswordToken = new UsernamePasswordAuthenticationToken(
 					userDetails, null, userDetails.getAuthorities());
@@ -82,7 +82,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@RequiredArgsConstructor
 	@Getter
 	private class InformationStructure {
-		private final String username;
+		private final String email;
 		private final String jwt;
 	}
 

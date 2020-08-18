@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public final class AuthenticationResponseModel {
 
-	private final String username;
+	private final String email;
 	private final Collection<? extends GrantedAuthority> roles;
 	private final String token;
 }

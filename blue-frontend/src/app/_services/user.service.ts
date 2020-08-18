@@ -1,21 +1,29 @@
-﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+﻿import { Injectable, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
-import { User } from '@/_models';
+import { User } from "@/_models";
 
-@Injectable({ providedIn: 'root' })
-export class UserService {
-    constructor(private http: HttpClient) { }
+@Injectable({ providedIn: "root" })
+export class UserService implements OnInit {
+  constructor(private http: HttpClient) {}
 
-    getAll() {
-        return this.http.get<User[]>(`${config.apiUrl}/users`);
-    }
+  ngOnInit(): void {}
 
-    register(user: User) {
-        return this.http.post(`${config.apiUrl}/users/register`, user);
-    }
+  getAll(token: string) {
+    return this.http.get<User[]>(`${config.apiUrl}/users`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+  }
 
-    delete(id: number) {
-        return this.http.delete(`${config.apiUrl}/users/${id}`);
-    }
+  register(user: User) {
+    return this.http.post(`${config.apiUrl}/register`, user);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${config.apiUrl}/users/${id}`);
+  }
 }

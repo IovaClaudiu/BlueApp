@@ -1,9 +1,6 @@
 package com.example.demo.models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,14 +17,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "user")
-public class UserEntity {
+public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private long id;
 
-	@Column(name = "username")
-	private String username;
+	private String email;
+
+	private String firstname;
+
+	private String lastname;
 
 	private String password;
 

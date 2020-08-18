@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.models.UserEntity;
+import com.example.demo.models.User;
 
 /**
  * User repository that will get information about our users.
@@ -14,7 +14,7 @@ import com.example.demo.models.UserEntity;
  *
  */
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-	Optional<UserEntity> findByUsername(String username);
+	Optional<User> findByEmail(String email);
 }

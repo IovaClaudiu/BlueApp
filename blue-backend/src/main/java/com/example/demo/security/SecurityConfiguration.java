@@ -1,5 +1,7 @@
 package com.example.demo.security;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.filters.JwtRequestFilter;
 import com.example.demo.service.MyUserDetailsService;
@@ -37,9 +42,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()//
+		http.csrf().disable().cors().configurationSource(corsConfigurationSource())//
+				.and().authorizeRequests().antMatchers("/authenticate").permitAll()//
 				.antMatchers("/admin").hasRole("ADMIN")//
-				.antMatchers("/user").hasAnyRole("ADMIN", "USER")//
+				.antMatchers("/users").hasAnyRole("ADMIN", "USER")//
 				.anyRequest().authenticated()//
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -65,6 +71,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+
+	/**
+	 * CORS configurations for our blue app application
+	 * 
+	 * @return an instance of {@link CorsConfigurationSource} with all the
+	 *         configurations.
+	 */
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		configuration.setAllowCredentials(true);
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 }

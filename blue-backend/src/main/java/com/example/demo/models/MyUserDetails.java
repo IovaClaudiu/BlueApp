@@ -21,7 +21,7 @@ public class MyUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private final UserEntity user;
+	private final User user;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -37,7 +37,7 @@ public class MyUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getUsername();
+		return user.getEmail();
 	}
 
 	@Override
