@@ -1,9 +1,5 @@
 package com.example.demo.models;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +14,6 @@ import lombok.RequiredArgsConstructor;
 public final class AuthenticationResponseModel {
 
 	private final String email;
-	private final Collection<? extends GrantedAuthority> roles;
+	private final String role;
 	private final String token;
 }

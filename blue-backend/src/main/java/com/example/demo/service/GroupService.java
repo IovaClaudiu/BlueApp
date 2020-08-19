@@ -34,18 +34,8 @@ public class GroupService {
 		return findAll.stream().map(this::getDTOfromGroup).collect(Collectors.toList());
 	}
 
-	/**
-	 * Delete a user from a specific group.
-	 * 
-	 * @param email
-	 */
-	public void deleteUserGroupEntry(final String email) {
-		repo.deleteGroupEntry(email);
-	}
-
 	private GroupDTO getDTOfromGroup(final Group group) {
 		GroupDTO dto = new GroupDTO();
-		dto.setUserEmail(group.getUserEmail());
 		dto.setGroupName(group.getGroupName());
 		return dto;
 	}

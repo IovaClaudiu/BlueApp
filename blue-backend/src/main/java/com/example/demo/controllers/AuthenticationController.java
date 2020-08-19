@@ -40,7 +40,6 @@ public final class AuthenticationController {
 	@PostMapping("/register")
 	public final ResponseEntity<?> register(@RequestBody @Validated final UserDTO user) {
 		try {
-			user.setRoles("ROLE_USER");
 			userService.addUser(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception e) {
@@ -59,9 +58,10 @@ public final class AuthenticationController {
 		}
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
+		UserDTO userByEmail = this.userService.getUserByEmail(userDetails.getUsername());
 
 		return ResponseEntity
-				.ok(new AuthenticationResponseModel(userDetails.getUsername(), userDetails.getAuthorities(), jwt));
+				.ok(new AuthenticationResponseModel(userDetails.getUsername(), userByEmail.getRole(), jwt));
 	}
 
 }

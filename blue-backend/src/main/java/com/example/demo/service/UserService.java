@@ -3,8 +3,10 @@ package com.example.demo.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserDTO;
@@ -21,19 +23,20 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor
+@Async
 public class UserService {
 
 	private final UserRepository repo;
-	private final GroupService groupRepo;
 
 	/**
 	 * Get all the user form DB
 	 * 
 	 * @return a {@link Collection} with the users from DB if any.
 	 */
-	public final Collection<UserDTO> getUsers() {
-		List<User> findAll = repo.findAll();
-		return findAll.stream().map(this::getUserDTOfromUser).collect(Collectors.toList());
+	public final CompletableFuture<List<UserDTO>> getUsers() {
+		CompletableFuture<List<UserDTO>> thenApply = CompletableFuture.supplyAsync(repo::findAll)
+				.thenApply(users -> users.stream().map(this::getUserDTOfromUser).collect(Collectors.toList()));
+		return thenApply;
 	}
 
 	/**
@@ -55,10 +58,22 @@ public class UserService {
 		Optional<User> findByEmail = repo.findByEmail(email);
 		findByEmail.ifPresentOrElse((user) -> {
 			repo.delete(user);
-			groupRepo.deleteUserGroupEntry(email);
 		}, () -> {
 			throw new IllegalArgumentException("Failed to find a user with email: " + email);
 		});
+	}
+
+	/**
+	 * Get the user from the given email address
+	 * 
+	 * @param email the email address.
+	 * @return
+	 */
+	public final UserDTO getUserByEmail(final String email) {
+		Optional<User> findByEmail = repo.findByEmail(email);
+		return getUserDTOfromUser(findByEmail.orElseThrow(() -> {
+			throw new IllegalArgumentException("Failed to find a user with email: " + email);
+		}));
 	}
 
 	private final User getUserFromDTO(final UserDTO dto) {
@@ -67,7 +82,8 @@ public class UserService {
 		user.setFirstname(dto.getFirstname());
 		user.setLastname(dto.getLastname());
 		user.setPassword(dto.getPassword());
-		user.setRoles(dto.getRoles());
+		user.setGroups(dto.getGroups());
+		user.setRole(dto.getRole() != null ? dto.getRole() : "ROLE_USER");
 		return user;
 	}
 
@@ -77,7 +93,8 @@ public class UserService {
 		dto.setFirstname(user.getFirstname());
 		dto.setLastname(user.getLastname());
 		dto.setPassword(user.getPassword());
-		dto.setRoles(user.getRoles());
+		dto.setGroups(user.getGroups());
+		dto.setRole(user.getRole());
 		dto.setId(user.getId());
 		return dto;
 	}

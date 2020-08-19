@@ -1,8 +1,7 @@
 package com.example.demo.models;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,9 +26,7 @@ public class MyUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Stream.of(user.getRoles().split(","))//
-				.map(SimpleGrantedAuthority::new)//
-				.collect(Collectors.toList());
+		return Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
 	}
 
 	@Override

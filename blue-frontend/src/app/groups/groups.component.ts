@@ -22,7 +22,7 @@ export class GroupsComponent implements OnInit {
     this.loadAllGroups();
   }
 
-  onEdit() {
+  onAdd() {
     console.log("press");
   }
 

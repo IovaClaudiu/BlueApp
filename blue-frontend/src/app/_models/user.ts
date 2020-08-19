@@ -1,4 +1,5 @@
-﻿import { Role } from "./role";
+﻿import { Groups } from "./groups";
+import { Role } from "./role";
 export class User {
   id: string;
   email: string;
@@ -6,5 +7,6 @@ export class User {
   lastname: string;
   password: string;
   token: string;
-  roles: Role[];
+  groups: Groups[];
+  role: string;
 }

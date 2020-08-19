@@ -31,8 +31,4 @@ public class Group {
 	@Column(name = "group_name")
 	private String groupName;
 
-	@NotNull
-	@Column(name = "user_email")
-	private String userEmail;
-
 }

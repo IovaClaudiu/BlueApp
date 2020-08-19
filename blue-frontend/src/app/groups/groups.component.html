@@ -1,23 +1,14 @@
 <h1>Hi {{ currentUser.email }} !</h1>
 <hr />
+<button
+  class="btn btn-warning mb-3"
+  [disabled]="this.currentUser.role !== 'ROLE_ADMIN'"
+  (click)="onAdd()"
+>
+  Add Group
+</button>
 <h3>All Groups:</h3>
-<table class="table table-bordered">
-  <thead class="thead-dark">
-    <th scope="col">Group Name</th>
-    <th scope="col">User Email</th>
-    <th scope="col">Actions</th>
-  </thead>
-  <tbody *ngFor="let group of groups">
-    <td class="align-middle">{{ group.groupName }}</td>
-    <td class="align-middle">{{ group.userEmail }}</td>
-    <td>
-      <button
-        class="btn btn-warning"
-        [disabled]="this.currentUser.roles[0].authority !== 'ROLE_ADMIN'"
-        (click)="onEdit()"
-      >
-        Edit
-      </button>
-    </td>
-  </tbody>
-</table>
+<app-group-component
+  *ngFor="let group of groups"
+  [group]="group"
+></app-group-component>

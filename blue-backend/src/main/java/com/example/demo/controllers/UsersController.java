@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class UsersController {
 	@GetMapping(path = "/users")
 	public final ResponseEntity<?> users() {
 		try {
-			Collection<UserDTO> users = this.userService.getUsers();
-			return ResponseEntity.ok(users);
+			CompletableFuture<List<UserDTO>> users = this.userService.getUsers();
+			return ResponseEntity.ok(users.get());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

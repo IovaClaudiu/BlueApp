@@ -20,7 +20,4 @@ public class GroupDTO {
 	@NotNull
 	private String groupName;
 
-	@NotNull
-	private String userEmail;
-
 }

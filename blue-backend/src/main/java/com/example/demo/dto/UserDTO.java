@@ -31,6 +31,8 @@ public class UserDTO {
 	@NotNull
 	private String password;
 
-	private String roles;
+	private String role;
+
+	private String[] groups;
 
 }

@@ -8,7 +8,7 @@
     <th scope="col">First</th>
     <th scope="col">Last</th>
     <th scope="col">Email</th>
-    <th scope="col">Roles</th>
+    <th scope="col">Groups</th>
     <th scope="col">Actions</th>
   </thead>
   <tbody *ngFor="let user of users">
@@ -16,13 +16,13 @@
     <td class="align-middle">{{ user.firstname }}</td>
     <td class="align-middle">{{ user.lastname }}</td>
     <td class="align-middle">{{ user.email }}</td>
-    <td class="align-middle">{{ user.roles }}</td>
+    <td class="align-middle"></td>
     <td>
       <button
         (click)="deleteUser(user.email, user.roles)"
         class="btn btn-danger"
         [disabled]="
-          user.roles === 'ROLE_ADMIN' || user.email === this.currentUser.email
+          user.role === 'ROLE_ADMIN' || user.email === this.currentUser.email
         "
       >
         Delete

@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,5 +40,9 @@ public class User {
 	private String password;
 
 	@NotNull
-	private String roles;
+	@Column(name = "[role]")
+	private String role;
+
+	@Column(name = "[groups]")
+	private String[] groups;
 }

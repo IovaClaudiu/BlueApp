@@ -1,4 +1,5 @@
-﻿import { NgModule } from "@angular/core";
+﻿import { GroupComponent } from "./groups/group/group.component";
+import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -26,6 +27,7 @@ import { GroupsComponent } from "./groups";
     RegisterComponent,
     AlertComponent,
     GroupsComponent,
+    GroupComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

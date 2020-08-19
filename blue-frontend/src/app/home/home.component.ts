@@ -29,6 +29,9 @@ export class HomeComponent implements OnInit {
   }
 
   deleteUser(email: string, role: string) {
+    if (email === this.currentUser.email || role === "ROLE_ADMIN") {
+      return;
+    }
     if (
       confirm(
         "Are you sure you want to delete the user with email: " + email + " ?"
