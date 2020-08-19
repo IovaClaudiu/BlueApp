@@ -1,59 +1,49 @@
 package com.example.demo.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.models.MyUserDetails;
-import com.example.demo.models.User;
+import com.example.demo.entities.User;
 import com.example.demo.repo.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 /**
- * User detail service class.
+ * Service class for users.
  * 
  * @author ClaudiuIova
  *
  */
 @Service
 @RequiredArgsConstructor
-public final class MyUserDetailsService implements UserDetailsService {
+public class UserService {
 
 	private final UserRepository repo;
-
-	@Override
-	public final UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-		Optional<User> findByUsername = repo.findByEmail(email);
-
-		findByUsername.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + email));
-
-		return findByUsername.map(MyUserDetails::new).get();
-	}
+	private final GroupService groupRepo;
 
 	/**
 	 * Get all the user form DB
 	 * 
 	 * @return a {@link Collection} with the users from DB if any.
 	 */
-	public final Collection<User> getUsers() {
-		return repo.findAll();
+	public final Collection<UserDTO> getUsers() {
+		List<User> findAll = repo.findAll();
+		return findAll.stream().map(this::getUserDTOfromUser).collect(Collectors.toList());
 	}
 
 	/**
 	 * Save the user in the DB
 	 * 
 	 * @param user The user that want to be saved.
-	 * @return The saved {@link User}.
 	 */
-	public final User addUser(final UserDTO userDTO) {
+	public final void addUser(final UserDTO userDTO) {
 		User user = getUserFromDTO(userDTO);
-		return repo.saveAndFlush(user);
+		repo.saveAndFlush(user);
 	}
 
 	/**
@@ -65,12 +55,13 @@ public final class MyUserDetailsService implements UserDetailsService {
 		Optional<User> findByEmail = repo.findByEmail(email);
 		findByEmail.ifPresentOrElse((user) -> {
 			repo.delete(user);
+			groupRepo.deleteUserGroupEntry(email);
 		}, () -> {
 			throw new IllegalArgumentException("Failed to find a user with email: " + email);
 		});
 	}
 
-	private User getUserFromDTO(UserDTO dto) {
+	private final User getUserFromDTO(final UserDTO dto) {
 		User user = new User();
 		user.setEmail(dto.getEmail());
 		user.setFirstname(dto.getFirstname());
@@ -78,6 +69,17 @@ public final class MyUserDetailsService implements UserDetailsService {
 		user.setPassword(dto.getPassword());
 		user.setRoles(dto.getRoles());
 		return user;
+	}
+
+	private UserDTO getUserDTOfromUser(final User user) {
+		UserDTO dto = new UserDTO();
+		dto.setEmail(user.getEmail());
+		dto.setFirstname(user.getFirstname());
+		dto.setLastname(user.getLastname());
+		dto.setPassword(user.getPassword());
+		dto.setRoles(user.getRoles());
+		dto.setId(user.getId());
+		return dto;
 	}
 
 }

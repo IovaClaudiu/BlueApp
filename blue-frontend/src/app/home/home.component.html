@@ -1,4 +1,5 @@
 ﻿<h1>Hi {{ currentUser.email }} !</h1>
+<hr />
 <p class="lead">You're logged in BlueApp</p>
 <h3>All users:</h3>
 <table class="table table-bordered">
@@ -20,6 +21,9 @@
       <button
         (click)="deleteUser(user.email, user.roles)"
         class="btn btn-danger"
+        [disabled]="
+          user.roles === 'ROLE_ADMIN' || user.email === this.currentUser.email
+        "
       >
         Delete
       </button>

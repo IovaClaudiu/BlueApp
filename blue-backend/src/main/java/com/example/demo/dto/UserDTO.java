@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.example.demo.models.User;
+import com.example.demo.entities.User;
 
 import lombok.Getter;
 import lombok.Setter;

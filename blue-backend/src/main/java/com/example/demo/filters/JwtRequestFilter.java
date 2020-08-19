@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.demo.jwt.JWTUtil;
-import com.example.demo.service.MyUserDetailsService;
+import com.example.demo.service.UserDetailsServiceImplementation;
 
 import io.jsonwebtoken.JwtException;
 import lombok.Getter;
@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	private final JWTUtil jwtUtil;
-	private final MyUserDetailsService userServiceDetails;
+	private final UserDetailsServiceImplementation userServiceDetails;
 
 	private static final String AUTHORIZATION = "Authorization";
 

@@ -1,5 +1,6 @@
-package com.example.demo.models;
+package com.example.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,33 +12,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * User entity class.
+ * Entity class for the groups table
  * 
  * @author ClaudiuIova
  *
  */
-@Entity
 @Getter
 @Setter
-@Table(name = "user")
-public class User {
+@Entity
+@Table(name = "[group]")
+public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	@NotNull
-	private String firstname;
+	@Column(name = "group_name")
+	private String groupName;
 
 	@NotNull
-	private String lastname;
+	@Column(name = "user_email")
+	private String userEmail;
 
-	@NotNull
-	private String email;
-
-	@NotNull
-	private String password;
-
-	@NotNull
-	private String roles;
 }

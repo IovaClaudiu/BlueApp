@@ -1,4 +1,5 @@
-﻿import { Routes, RouterModule } from "@angular/router";
+﻿import { GroupsComponent } from "./groups/groups.component";
+import { Routes, RouterModule } from "@angular/router";
 
 import { HomeComponent } from "./home";
 import { LoginComponent } from "./login";
@@ -9,7 +10,7 @@ const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "groups", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "groups", component: GroupsComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to home
   { path: "**", redirectTo: "" },

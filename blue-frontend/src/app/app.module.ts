@@ -10,6 +10,7 @@ import { HomeComponent } from "./home";
 import { LoginComponent } from "./login";
 import { RegisterComponent } from "./register";
 import { AlertComponent } from "./alert";
+import { GroupsComponent } from "./groups";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AlertComponent } from "./alert";
     LoginComponent,
     RegisterComponent,
     AlertComponent,
+    GroupsComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

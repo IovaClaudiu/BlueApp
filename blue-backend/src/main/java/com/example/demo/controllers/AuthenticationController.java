@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import java.util.Collection;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,9 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +16,13 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.jwt.JWTUtil;
 import com.example.demo.models.AuthenticationRequestModel;
 import com.example.demo.models.AuthenticationResponseModel;
-import com.example.demo.models.User;
-import com.example.demo.service.MyUserDetailsService;
+import com.example.demo.service.UserDetailsServiceImplementation;
+import com.example.demo.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 /**
- * This class will hold all the required end-points for this application.
+ * Constroller class for authentication
  * 
  * @author ClaudiuIova
  *
@@ -35,39 +30,19 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
-public final class ManageController {
+public final class AuthenticationController {
 
 	private final AuthenticationManager authenticationManager;
-	private final MyUserDetailsService userDetailsService;
+	private final UserDetailsServiceImplementation userDetailsService;
+	private final UserService userService;
 	private final JWTUtil jwtTokenUtil;
-
-	@GetMapping("/users")
-	public final ResponseEntity<?> users() {
-		try {
-			Collection<User> users = this.userDetailsService.getUsers();
-			return ResponseEntity.ok(users);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
-	}
-
-	@DeleteMapping("/user/{email}")
-	public final ResponseEntity<?> delete(@PathVariable("email") final String email) {
-		try {
-			userDetailsService.deleteUser(email);
-			return ResponseEntity.noContent().build();
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		}
-
-	}
 
 	@PostMapping("/register")
 	public final ResponseEntity<?> register(@RequestBody @Validated final UserDTO user) {
 		try {
 			user.setRoles("ROLE_USER");
-			User addUser = userDetailsService.addUser(user);
-			return ResponseEntity.ok(addUser);
+			userService.addUser(user);
+			return ResponseEntity.ok(user);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

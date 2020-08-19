@@ -29,7 +29,11 @@ export class HomeComponent implements OnInit {
   }
 
   deleteUser(email: string, role: string) {
-    if (this.validateUser(email, role)) {
+    if (
+      confirm(
+        "Are you sure you want to delete the user with email: " + email + " ?"
+      )
+    ) {
       this.userService
         .delete(email)
         .pipe(first())
@@ -43,23 +47,6 @@ export class HomeComponent implements OnInit {
             this.loadAllUsers();
           }
         );
-    }
-  }
-
-  private validateUser(email: string, role: string): boolean {
-    if (email === this.currentUser.email || role === "ROLE_ADMIN") {
-      this.alertService.error(
-        "The selected user with email: " + email + " cannot be deleted!"
-      );
-      setTimeout(() => {
-        this.alertService.clear();
-      }, 4000);
-      return false;
-    } else {
-      const response = confirm(
-        "Are you sure you want to delete the user with email: " + email + " ?"
-      );
-      return response;
     }
   }
 }

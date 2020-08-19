@@ -18,6 +18,6 @@ export class UserService implements OnInit {
   }
 
   delete(email: string) {
-    return this.http.delete(`${config.apiUrl}/user/${email}`);
+    return this.http.delete(`${config.apiUrl}/users/${email}`);
   }
 }

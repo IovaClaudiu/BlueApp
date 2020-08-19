@@ -17,7 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.filters.JwtRequestFilter;
-import com.example.demo.service.MyUserDetailsService;
+import com.example.demo.service.UserDetailsServiceImplementation;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	private final MyUserDetailsService myUserDetailsService;
+	private final UserDetailsServiceImplementation myUserDetailsService;
 	private final JwtRequestFilter jwtFilter;
 
 	@Override
@@ -44,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().configurationSource(corsConfigurationSource())//
 				.and().authorizeRequests().antMatchers("/authenticate", "/register").permitAll()//
-				.antMatchers("/users").hasAnyRole("ADMIN", "USER")//
 				.anyRequest().authenticated()//
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
