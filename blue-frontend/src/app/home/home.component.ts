@@ -1,10 +1,9 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { first, timeout } from "rxjs/operators";
+﻿import { Component, OnInit } from '@angular/core';
+import { first, timeout } from 'rxjs/operators';
+import { User } from '../_models';
+import { AuthenticationService, UserService, AlertService } from '../_services';
 
-import { User } from "@/_models";
-import { UserService, AuthenticationService, AlertService } from "@/_services";
-
-@Component({ templateUrl: "home.component.html" })
+@Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
   currentUser: User;
   users = [];
@@ -29,12 +28,12 @@ export class HomeComponent implements OnInit {
   }
 
   deleteUser(email: string, role: string) {
-    if (email === this.currentUser.email || role === "ROLE_ADMIN") {
+    if (email === this.currentUser.email || role === 'ROLE_ADMIN') {
       return;
     }
     if (
       confirm(
-        "Are you sure you want to delete the user with email: " + email + " ?"
+        'Are you sure you want to delete the user with email: ' + email + ' ?'
       )
     ) {
       this.userService

@@ -1,12 +1,11 @@
-import { Groups as Group } from "./../_models/groups";
-import { AlertService } from "./../_services/alert.service";
-import { first } from "rxjs/operators";
-import { Component, OnInit } from "@angular/core";
-import { GroupsService } from "@/_services/groups.service";
-import { AuthenticationService } from "@/_services";
-import { User } from "@/_models";
+import { Groups as Group } from './../_models/groups';
+import { AlertService } from './../_services/alert.service';
+import { first } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../_models';
+import { GroupsService, AuthenticationService } from '../_services';
 
-@Component({ templateUrl: "groups.component.html" })
+@Component({ templateUrl: 'groups.component.html' })
 export class GroupsComponent implements OnInit {
   currentUser: User;
   groups: Group[];
@@ -23,7 +22,7 @@ export class GroupsComponent implements OnInit {
   }
 
   onAdd() {
-    console.log("press");
+    console.log('press');
   }
 
   private loadAllGroups() {
