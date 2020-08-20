@@ -44,9 +44,10 @@ public class UserService {
 	 * 
 	 * @param user The user that want to be saved.
 	 */
-	public final void addUser(final UserDTO userDTO) {
+	public final UserDTO addUser(final UserDTO userDTO) {
 		User user = getUserFromDTO(userDTO);
-		repo.saveAndFlush(user);
+		User saveAndFlush = repo.saveAndFlush(user);
+		return getUserDTOfromUser(saveAndFlush);
 	}
 
 	/**
@@ -76,13 +77,24 @@ public class UserService {
 		}));
 	}
 
+	/**
+	 * Update the user group.
+	 * 
+	 * @param email
+	 * @param group
+	 * @return the updated user.
+	 */
+	public final void updateUser(final String email, final String group) {
+		this.repo.updateByEmail(email, group);
+	}
+
 	private final User getUserFromDTO(final UserDTO dto) {
 		User user = new User();
 		user.setEmail(dto.getEmail());
 		user.setFirstname(dto.getFirstname());
 		user.setLastname(dto.getLastname());
 		user.setPassword(dto.getPassword());
-		user.setGroups(dto.getGroups());
+		user.setGroup(dto.getGroup());
 		user.setRole(dto.getRole() != null ? dto.getRole() : "ROLE_USER");
 		return user;
 	}
@@ -93,7 +105,7 @@ public class UserService {
 		dto.setFirstname(user.getFirstname());
 		dto.setLastname(user.getLastname());
 		dto.setPassword(user.getPassword());
-		dto.setGroups(user.getGroups());
+		dto.setGroup(user.getGroup());
 		dto.setRole(user.getRole());
 		dto.setId(user.getId());
 		return dto;

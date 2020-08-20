@@ -43,6 +43,6 @@ public class User {
 	@Column(name = "[role]")
 	private String role;
 
-	@Column(name = "[groups]")
-	private String[] groups;
+	@Column(name = "[group]")
+	private String group;
 }

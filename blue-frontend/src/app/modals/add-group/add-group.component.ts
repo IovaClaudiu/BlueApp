@@ -58,7 +58,7 @@ export class AddGroupComponent {
     </div>
   `,
 })
-export class ModalContentComponent implements OnInit {
+export class ModalContentComponent {
   title: string;
   closeBtnName: string;
 
@@ -67,9 +67,7 @@ export class ModalContentComponent implements OnInit {
     private grpService: GroupsService
   ) {}
 
-  ngOnInit() {}
-
-  onAddGroup(groupName: string) {
+  onAddGroup(groupName: string): void {
     this.grpService
       .addGroup({ groupName: groupName })
       .pipe(first())

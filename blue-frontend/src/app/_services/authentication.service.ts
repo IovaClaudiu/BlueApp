@@ -21,7 +21,7 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<any> {
     return this.http
       .post<any>(`${environment.apiUrl}/authenticate`, { email, password })
       .pipe(
@@ -33,7 +33,7 @@ export class AuthenticationService {
       );
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }

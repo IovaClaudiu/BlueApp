@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService, UserService, AlertService } from '../_services';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({ selector: 'app-register', templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
+  loading: boolean = false;
+  submitted: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
     this.alertService.clear();
     if (this.registerForm.invalid) {

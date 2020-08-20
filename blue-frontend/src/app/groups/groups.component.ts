@@ -1,13 +1,16 @@
 import { Group } from '../_models/group';
 import { AlertService } from './../_services/alert.service';
 import { first } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../_models';
 import { GroupsService, AuthenticationService } from '../_services';
 import { Subscription } from 'rxjs';
 
-@Component({ templateUrl: 'groups.component.html' })
-export class GroupsComponent implements OnInit {
+@Component({
+  selector: 'app-groups-component',
+  templateUrl: 'groups.component.html',
+})
+export class GroupsComponent implements OnInit, OnDestroy {
   currentUser: User;
   groups: Group[];
   private addGroupSubscription: Subscription;
@@ -37,9 +40,14 @@ export class GroupsComponent implements OnInit {
     );
   }
 
-  private loadAllGroups() {
+  ngOnDestroy(): void {
+    this.addGroupSubscription.unsubscribe();
+    this.removeGroupSubscription.unsubscribe();
+  }
+
+  private loadAllGroups(): void {
     this.groupsService
-      .getAll()
+      .getGroups()
       .pipe(first())
       .subscribe(
         (groups) => {

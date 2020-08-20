@@ -2,7 +2,7 @@
 import { GroupComponent } from './groups/group/group.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { JwtInterceptor } from './_helpers';
@@ -15,15 +15,24 @@ import { GroupsComponent } from './groups';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddGroupComponent } from './modals/add-group/add-group.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {
+  AddToGroupComponent,
+  ModalAddToGroupComponent,
+} from './modals/add-to-group/add-to-group.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
+    ModalModule.forRoot(),
+
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ModalModule.forRoot(),
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -34,6 +43,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     GroupsComponent,
     GroupComponent,
     AddGroupComponent,
+    AddToGroupComponent,
+    ModalAddToGroupComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

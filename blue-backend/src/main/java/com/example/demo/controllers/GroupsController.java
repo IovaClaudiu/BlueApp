@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.Collection;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,6 +57,9 @@ public class GroupsController {
 		try {
 			this.groupService.removeGroup(group);
 			return ResponseEntity.noContent().build();
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("The selected group: " + group + " cannot be deleted because it's assign to a user!");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

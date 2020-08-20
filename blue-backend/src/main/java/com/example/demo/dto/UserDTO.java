@@ -33,6 +33,5 @@ public class UserDTO {
 
 	private String role;
 
-	private String[] groups;
-
+	private String group;
 }

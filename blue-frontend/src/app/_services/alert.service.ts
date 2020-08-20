@@ -4,8 +4,8 @@ import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
-  private subject = new Subject<any>();
-  private keepAfterRouteChange = false;
+  private subject: Subject<any> = new Subject<any>();
+  private keepAfterRouteChange: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
@@ -23,17 +23,17 @@ export class AlertService {
     return this.subject.asObservable();
   }
 
-  success(message: string, keepAfterRouteChange = false) {
+  success(message: string, keepAfterRouteChange = false): void {
     this.keepAfterRouteChange = keepAfterRouteChange;
     this.subject.next({ type: 'success', text: message });
   }
 
-  error(message: string, keepAfterRouteChange = false) {
+  error(message: string, keepAfterRouteChange = false): void {
     this.keepAfterRouteChange = keepAfterRouteChange;
     this.subject.next({ type: 'error', text: message });
   }
 
-  clear() {
+  clear(): void {
     this.subject.next();
   }
 }

@@ -1,10 +1,9 @@
-import { group } from '@angular/animations';
 import { GroupsService } from './../../_services/groups.service';
 import { Group } from './../../_models/group';
 import { AuthenticationService } from './../../_services/authentication.service';
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/_models';
-import { timestamp, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 @Component({
   templateUrl: './group.component.html',
@@ -21,7 +20,7 @@ export class GroupComponent {
     this.currentUser = this.authService.currentUserValue;
   }
 
-  onDelete() {
+  onDelete(): void {
     if (
       confirm(
         'Are you sure you want to delete the following group: ' +
@@ -36,7 +35,7 @@ export class GroupComponent {
             this.groupService.removeGroupSubscription.next(this.group);
           },
           (error) => {
-            alert(error);
+            alert(error.error);
           }
         );
     }
