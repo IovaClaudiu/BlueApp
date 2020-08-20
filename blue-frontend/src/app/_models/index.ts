@@ -1,3 +1,2 @@
-export * from './groups';
-export * from './role';
+export * from './group';
 export * from './user';

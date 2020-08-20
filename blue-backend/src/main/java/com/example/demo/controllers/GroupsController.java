@@ -5,7 +5,11 @@ import java.util.Collection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.GroupDTO;
@@ -32,6 +36,26 @@ public class GroupsController {
 		try {
 			Collection<GroupDTO> groups = groupService.getGroups();
 			return ResponseEntity.ok(groups);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+
+	@PostMapping("/groups")
+	public final ResponseEntity<?> addGroup(@RequestBody final GroupDTO groupName) {
+		try {
+			GroupDTO addGroup = groupService.addGroup(groupName);
+			return ResponseEntity.ok(addGroup);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+
+	@DeleteMapping("/groups/{group}")
+	public final ResponseEntity<?> deleteGroup(@PathVariable("group") final String group) {
+		try {
+			this.groupService.removeGroup(group);
+			return ResponseEntity.noContent().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

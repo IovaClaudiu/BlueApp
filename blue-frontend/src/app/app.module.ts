@@ -13,6 +13,8 @@ import { RegisterComponent } from './register';
 import { AlertComponent } from './alert';
 import { GroupsComponent } from './groups';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddGroupComponent } from './modals/add-group/add-group.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -21,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -30,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AlertComponent,
     GroupsComponent,
     GroupComponent,
+    AddGroupComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
