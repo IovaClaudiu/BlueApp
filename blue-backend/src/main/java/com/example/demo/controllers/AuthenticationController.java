@@ -22,7 +22,7 @@ import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Constroller class for authentication
+ * Controller class for authentication
  * 
  * @author ClaudiuIova
  *

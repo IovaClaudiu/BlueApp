@@ -47,12 +47,12 @@ public final class JWTUtil {
 		return extractClaim(token, Claims::getExpiration);
 	}
 
-	private final <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
+	private <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims);
 	}
 
-	private final Claims extractAllClaims(final String token) {
+	private Claims extractAllClaims(final String token) {
 		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
 	}
 
@@ -62,12 +62,12 @@ public final class JWTUtil {
 	 * @param userDetails The user details
 	 * @return the JWT token
 	 */
-	public String generateToken(final UserDetails userDetails) {
+	public final String generateToken(final UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userDetails.getUsername());
 	}
 
-	private final String createToken(final Map<String, Object> claims, final String subject) {
+	private String createToken(final Map<String, Object> claims, final String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(Date.from(Instant.now()))
 				.setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
@@ -85,7 +85,7 @@ public final class JWTUtil {
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 
-	private final boolean isTokenExpired(final String token) {
+	private boolean isTokenExpired(final String token) {
 		return extractExpiration(token).before(new Date());
 	}
 

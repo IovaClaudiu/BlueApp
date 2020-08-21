@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
  * Controller class for managing the groups.
  * 
  * @author ClaudiuIova
- * @return
  *
  */
 @RestController

@@ -41,7 +41,7 @@ public final class GroupService {
 	 * @param groupDto
 	 * @return
 	 */
-	public final GroupDTO addGroup(GroupDTO groupDto) {
+	public final GroupDTO addGroup(final GroupDTO groupDto) {
 		Group groupFromDTO = getGroupFromDTO(groupDto);
 		Group saveAndFlush = repo.saveAndFlush(groupFromDTO);
 		return getDTOfromGroup(saveAndFlush);
@@ -52,7 +52,7 @@ public final class GroupService {
 	 * 
 	 * @param groupDTO
 	 */
-	public final void removeGroup(String groupName) {
+	public final void removeGroup(final String groupName) {
 		Optional<Group> findByGroupName = repo.findByGroupName(groupName);
 		findByGroupName.ifPresentOrElse((group) -> {
 			repo.delete(group);

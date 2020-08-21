@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Entity class for the groups table
+ * Entity class for the group table
  * 
  * @author ClaudiuIova
  *
