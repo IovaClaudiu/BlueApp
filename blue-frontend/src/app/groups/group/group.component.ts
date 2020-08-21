@@ -1,3 +1,4 @@
+import { CheckUserRole } from './../../_helpers/checkRole';
 import { GroupsService } from './../../_services/groups.service';
 import { Group } from './../../_models/group';
 import { AuthenticationService } from './../../_services/authentication.service';
@@ -15,29 +16,32 @@ export class GroupComponent {
 
   constructor(
     private authService: AuthenticationService,
-    private groupService: GroupsService
+    private groupService: GroupsService,
+    private checkRole: CheckUserRole
   ) {
     this.currentUser = this.authService.currentUserValue;
   }
 
   onDelete(): void {
-    if (
-      confirm(
-        'Are you sure you want to delete the following group: ' +
-          this.group.groupName
-      )
-    ) {
-      this.groupService
-        .removeGroup(this.group.groupName)
-        .pipe(first())
-        .subscribe(
-          (data) => {
-            this.groupService.removeGroupSubscription.next(this.group);
-          },
-          (error) => {
-            alert(error.error);
-          }
-        );
+    if (this.checkRole.verifyHasRights()) {
+      if (
+        confirm(
+          'Are you sure you want to delete the following group: ' +
+            this.group.groupName
+        )
+      ) {
+        this.groupService
+          .removeGroup(this.group.groupName)
+          .pipe(first())
+          .subscribe(
+            (data) => {
+              this.groupService.removeGroupSubscription.next(this.group);
+            },
+            (error) => {
+              alert(error.error);
+            }
+          );
+      }
     }
   }
 }

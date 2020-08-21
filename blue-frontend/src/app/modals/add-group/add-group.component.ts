@@ -1,9 +1,6 @@
-import { Group } from './../../_models/group';
-import { first, catchError } from 'rxjs/operators';
-import { GroupsService } from './../../_services/groups.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { ModalAddGroupComponent } from './add-group-dialog/add-group-dialog';
+import { Component, Input } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-add-group',
@@ -20,65 +17,8 @@ export class AddGroupComponent {
       title: 'Add group',
       closeBtnName: 'Close',
     };
-    this.bsModalRef = this.modalService.show(ModalContentComponent, {
+    this.bsModalRef = this.modalService.show(ModalAddGroupComponent, {
       initialState,
     });
-  }
-}
-
-/* This is a component which we pass in modal*/
-@Component({
-  selector: 'modal-content',
-  template: `
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{ title }}</h4>
-      <button
-        type="button"
-        class="close pull-right"
-        aria-label="Close"
-        (click)="bsModalRef.hide()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <label for="groupName">Group Name</label>
-      <input #groupName class="form-control" id="groupName" />
-      <button
-        class="mt-3 btn btn-success"
-        (click)="onAddGroup(groupName.value)"
-      >
-        Add Group
-      </button>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
-        {{ closeBtnName }}
-      </button>
-    </div>
-  `,
-})
-export class ModalContentComponent {
-  title: string;
-  closeBtnName: string;
-
-  constructor(
-    public bsModalRef: BsModalRef,
-    private grpService: GroupsService
-  ) {}
-
-  onAddGroup(groupName: string): void {
-    this.grpService
-      .addGroup({ groupName: groupName })
-      .pipe(first())
-      .subscribe(
-        (data: Group) => {
-          this.grpService.addNewGroupSubscription.next(data);
-        },
-        (err) => {
-          alert(err);
-        }
-      );
-    this.bsModalRef.hide();
   }
 }

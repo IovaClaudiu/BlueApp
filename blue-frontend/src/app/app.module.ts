@@ -1,4 +1,5 @@
-﻿import { AppRoutingModule } from './app-routing.module';
+﻿import { AddToGroupComponent } from './modals/add-to-group/add-to-group.component';
+import { AppRoutingModule } from './app-routing.module';
 import { GroupComponent } from './groups/group/group.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,11 +16,9 @@ import { GroupsComponent } from './groups';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddGroupComponent } from './modals/add-group/add-group.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {
-  AddToGroupComponent,
-  ModalAddToGroupComponent,
-} from './modals/add-to-group/add-to-group.component';
 import { CommonModule } from '@angular/common';
+import { ModalAddGroupComponent } from './modals/add-group/add-group-dialog/add-group-dialog';
+import { ModalAddToGroupComponent } from './modals/add-to-group/add-to-group-dialog/add-to-group-dialog';
 
 @NgModule({
   imports: [
@@ -44,6 +43,7 @@ import { CommonModule } from '@angular/common';
     GroupComponent,
     AddGroupComponent,
     AddToGroupComponent,
+    ModalAddGroupComponent,
     ModalAddToGroupComponent,
   ],
   providers: [
