@@ -1,4 +1,5 @@
-﻿import { AddToGroupComponent } from './modals/add-to-group/add-to-group.component';
+﻿import { ConforimWindowDialog } from './modals/confirm-dialog/confirm-dialog.component';
+import { AddToGroupComponent } from './modals/add-to-group/add-to-group.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GroupComponent } from './groups/group/group.component';
 import { NgModule } from '@angular/core';
@@ -45,6 +46,7 @@ import { ModalAddToGroupComponent } from './modals/add-to-group/add-to-group-dia
     AddToGroupComponent,
     ModalAddGroupComponent,
     ModalAddToGroupComponent,
+    ConforimWindowDialog,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

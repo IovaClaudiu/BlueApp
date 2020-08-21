@@ -3,12 +3,15 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService, UserService, AlertService } from '../_services';
+import { Subject } from 'rxjs';
 
 @Component({ selector: 'app-register', templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading: boolean = false;
   submitted: boolean = false;
+  isModal = false;
+  registerSubject = new Subject<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -17,9 +20,10 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private alertService: AlertService
   ) {
-    // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
+    if (this.isModal === false) {
+      if (this.authenticationService.currentUserValue) {
+        this.router.navigate(['/']);
+      }
     }
   }
 
@@ -37,6 +41,14 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
+  onCancel(): void {
+    if (this.isModal === false) {
+      this.router.navigate(['/login']);
+    } else {
+      this.registerSubject.next(false);
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
     this.alertService.clear();
@@ -50,11 +62,20 @@ export class RegisterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data) => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login']);
+          if (this.isModal === false) {
+            this.alertService.success('Registration successful', true);
+            this.router.navigate(['/login']);
+          } else {
+            this.registerSubject.next(true);
+            this.userService.changeSubject.next(data);
+          }
         },
         (error) => {
-          this.alertService.error(error.error);
+          if (this.isModal === false) {
+            this.alertService.error(error.error);
+          } else {
+            alert(error.error);
+          }
           this.loading = false;
         }
       );
